@@ -1,1 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Roblox Cheat Hub Key Generator</title>
+</head>
+<body>
+    <h1>Roblox Cheat Hub Key Generator</h1>
+    <button id="generateKeys">Generate Keys</button>
+    <div id="keysContainer"></div>
+
+    <script>
+        document.getElementById('generateKeys').addEventListener('click', function() {
+            const keysContainer = document.getElementById('keysContainer');
+            keysContainer.innerHTML = ''; // Clear previous keys
+
+            for (let i = 0; i < 24; i++) {
+                const key = generateRandomKey();
+                const expirationTime = new Date();
+                expirationTime.setHours(expirationTime.getHours() + 1); // expire in 1 hour
+                keysContainer.innerHTML += `<div>Key: ${key} | Expires at: ${expirationTime.toUTCString()}</div>`;
+            }
+        });
+
+        function generateRandomKey() {
+            return Math.random().toString(36).substr(2, 10); // Generate random key
+        }
+    </script>
+</body>
+  </html>
 
