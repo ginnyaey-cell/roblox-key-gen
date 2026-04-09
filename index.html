@@ -3,30 +3,44 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Roblox Cheat Hub Key Generator</title>
+    <title>Roblox Key Generator</title>
 </head>
 <body>
-    <h1>Roblox Cheat Hub Key Generator</h1>
-    <button id="generateKeys">Generate Keys</button>
-    <div id="keysContainer"></div>
+    <h1>Roblox Key Generator</h1>
+    <form id="key-gen-form">
+        <label for="expiration">Select Expiration Time:</label>
+        <select id="expiration">
+            <option value="1">1 Hour</option>
+            <option value="24">24 Hours</option>
+            <option value="168">1 Week</option>
+            <option value="720">1 Month</option>
+        </select>
+        <br>
+        <label for="shortlink">Shortlink Support:</label>
+        <input type="text" id="shortlink" placeholder="Enter shortlink (optional)">
+        <br>
+        <button type="submit">Generate Key</button>
+    </form>
+    <div id="result"></div>
 
     <script>
-        document.getElementById('generateKeys').addEventListener('click', function() {
-            const keysContainer = document.getElementById('keysContainer');
-            keysContainer.innerHTML = ''; // Clear previous keys
-
-            for (let i = 0; i < 24; i++) {
-                const key = generateRandomKey();
-                const expirationTime = new Date();
-                expirationTime.setHours(expirationTime.getHours() + 1); // expire in 1 hour
-                keysContainer.innerHTML += `<div>Key: ${key} | Expires at: ${expirationTime.toUTCString()}</div>`;
-            }
+        document.getElementById('key-gen-form').addEventListener('submit', function(event) {
+            event.preventDefault();
+            const expiration = document.getElementById('expiration').value;
+            const shortlink = document.getElementById('shortlink').value;
+            // API integration logic goes here
+            const apiUrl = 'https://api.example.com/generate-key'; // Example API endpoint
+            fetch(apiUrl, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ expiration, shortlink })
+            }).then(response => response.json()).then(data => {
+                document.getElementById('result').innerText = `Generated Key: ${data.key}`;
+            }).catch(error => {
+                console.error('Error:', error);
+                document.getElementById('result').innerText = 'Failed to generate key.';
+            });
         });
-
-        function generateRandomKey() {
-            return Math.random().toString(36).substr(2, 10); // Generate random key
-        }
     </script>
 </body>
-  </html>
-
+</html>
